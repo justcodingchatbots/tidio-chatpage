@@ -4,13 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact me for more details · Solix Consulting</title>
-  <meta name="description" content="Contact Coen Zweers — book a meeting, connect on LinkedIn, or email. Solix AI Assistant widget is enabled." />
+  <meta name="description" content="Book an introduction, connect on LinkedIn, or email. Solix AI Assistant widget is enabled." />
   <style>
     :root{
       --bg:#000;
       --teal:#19b3b3;
       --pill:#118b8b;
       --text:#e8f6f6;
+      --container-w:1220px;
     }
     *{box-sizing:border-box}
     html, body{height:100%;margin:0}
@@ -19,12 +20,11 @@
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      display:block;
       padding: clamp(12px, 2vw, 20px);
       overflow-x:hidden;
     }
 
-    /* Brand top-left */
+    /* Brand — top-left with provided logo */
     .brand{
       position: fixed;
       top: clamp(12px, 2vw, 20px);
@@ -36,30 +36,28 @@
       font-size: clamp(14px, 2vw, 22px);
       z-index: 10;
     }
-    .brand img{ width: clamp(24px, 3.2vw, 36px); height:auto; display:block; }
+    .brand img{ width: clamp(26px, 3.4vw, 40px); height:auto; display:block; }
 
-    /* Main layout */
+    /* Main grid */
     .container{
-      width:min(1220px, 100%);
+      width:min(var(--container-w), 100%);
       margin: 0 auto;
-      margin-top: clamp(40px, 8vh, 80px); /* space beneath brand */
+      margin-top: clamp(48px, 8vh, 84px);
       display:grid;
       grid-template-columns: 1fr;
       gap: clamp(16px, 3vw, 40px);
       align-items:center;
     }
     @media (min-width: 980px){
-      .container{
-        grid-template-columns: 1fr 1.3fr;
-      }
+      .container{ grid-template-columns: 1fr 1.3fr; }
     }
 
-    /* Full-width page title */
+    /* Title spans full width above both columns, but smaller max so it fits between photo and buttons */
     .page-title{
-      grid-column: 1 / -1; /* span across both columns */
-      margin: 0;
-      font-size: clamp(42px, 9vw, 108px);
-      line-height: .95;
+      grid-column: 1 / -1;
+      margin: 0 0 clamp(8px, 1.6vw, 16px);
+      font-size: clamp(34px, 6vw, 80px);  /* reduced max from 108px -> 80px */
+      line-height: 1.02;
       font-weight: 900;
       color: var(--teal);
       letter-spacing: .2px;
@@ -101,7 +99,7 @@
   <script src="https://code.tidio.co/pc94huyj1coxv0pdlnhxcgjmavkxuifm.js" async></script>
 
   <script>
-    // Auto-open the assistant widget (no extra button shown on the page)
+    // Auto-open the assistant widget (no button visible)
     (function () {
       function openAssistant() {
         try {
