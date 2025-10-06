@@ -4,38 +4,35 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact Coen Zweers</title>
-  <meta name="description" content="Book an introduction or connect on LinkedIn." />
-
-  <!-- Fonts: system stack for performance -->
+  <meta name="description" content="Book an introduction, connect on LinkedIn, or chat with the AI assistant." />
   <style>
     :root{
+      --bg:#000000;
       --teal:#19b3b3;
-      --bg-overlay: rgba(0,0,0,0.55); /* darken for readability */
       --text:#e8f6f6;
     }
     *{box-sizing:border-box}
-    html, body{
-      height:100%;
-      margin:0;
-    }
+    html, body{height:100%;margin:0}
     body{
+      min-height:100vh;
       display:grid;
       place-items:center;
-      min-height:100vh;
-      background: var(--bg-overlay) center/cover no-repeat, url('background.jpg') center/cover no-repeat fixed;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
       color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
-    .container{
+    main{
       width:min(100%, 980px);
-      padding: clamp(16px, 3vw, 40px);
+      padding: clamp(16px, 4vw, 48px);
+      text-align:left;
     }
     h1{
       margin:0 0 28px;
-      font-size: clamp(32px, 6vw, 80px);
+      font-size: clamp(34px, 8vw, 96px);
       line-height:1.02;
       font-weight:800;
       letter-spacing:0.2px;
+      color: var(--teal);
     }
     .actions{
       display:grid;
@@ -51,38 +48,42 @@
       border-radius:999px;
       text-decoration:none;
       background: var(--teal);
-      color:#051f1f;
+      color:#031f1f;
       font-weight:700;
       font-size: clamp(16px, 2.2vw, 22px);
       border: 2px solid transparent;
       transition: transform .08s ease, box-shadow .2s ease, background .15s ease, color .15s ease;
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      box-shadow: 0 10px 24px rgba(0,0,0,.4);
     }
     .btn:hover{
       transform: translateY(-1px);
-      box-shadow: 0 14px 36px rgba(0,0,0,.32);
+      box-shadow: 0 14px 36px rgba(0,0,0,.55);
       background: #22c7c7;
       color: #042222;
     }
     .btn:active{ transform: translateY(0) scale(.99); }
     .note{
       margin-top:18px;
-      opacity:.9;
+      opacity:.8;
       font-size: 14px;
     }
-
-    /* Layout with photo inset on large screens (optional)
-       If you later want to add the portrait as a card, the bg already shows full-screen. */
+    footer{
+      margin-top:28px;
+      font-size:12px;
+      opacity:.6;
+    }
   </style>
 </head>
 <body>
-  <main class="container" role="main">
+  <main role="main">
     <h1>Contact me for more details</h1>
     <div class="actions">
-      <a class="btn" href="https://calendly.com/coenzweers-solix/introduction" target="_blank" rel="noopener">Book an introduction</a>
-      <a class="btn" href="https://www.linkedin.com/in/coenzweers/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://calendly.com/coenzweers-solix/introduction" target="_blank" rel="noopener" aria-label="Book an introduction on Calendly">Book an introduction</a>
+      <a class="btn" href="https://www.linkedin.com/in/coenzweers/" target="_blank" rel="noopener" aria-label="Visit my LinkedIn profile">LinkedIn</a>
+      <a class="btn" href="./chat.html" aria-label="Open AI chatbot assistant">AI chatbot – Ask me anything</a>
     </div>
-    <p class="note">No chatbot button shown on this page.</p>
+    <p class="note">Background is intentionally black. The AI assistant opens on a separate full-screen page.</p>
+    <footer>© Coen Zweers</footer>
   </main>
 </body>
 </html>
