@@ -24,7 +24,6 @@
       overflow-x:hidden;
     }
 
-    /* Brand — top-left with provided logo */
     .brand{
       position: fixed;
       top: clamp(12px, 2vw, 20px);
@@ -38,7 +37,6 @@
     }
     .brand img{ width: clamp(26px, 3.4vw, 40px); height:auto; display:block; }
 
-    /* Main grid */
     .container{
       width:min(var(--container-w), 100%);
       margin: 0 auto;
@@ -52,11 +50,10 @@
       .container{ grid-template-columns: 1fr 1.3fr; }
     }
 
-    /* Title spans full width above both columns, but smaller max so it fits between photo and buttons */
     .page-title{
       grid-column: 1 / -1;
       margin: 0 0 clamp(8px, 1.6vw, 16px);
-      font-size: clamp(34px, 6vw, 80px);  /* reduced max from 108px -> 80px */
+      font-size: clamp(34px, 6vw, 80px);
       line-height: 1.02;
       font-weight: 900;
       color: var(--teal);
@@ -93,13 +90,20 @@
     }
     .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 36px rgba(0,0,0,.6); background:#19b3b3; }
     .btn:active{ transform: translateY(0) scale(.99); }
+
+    .btn-static{
+      cursor: default;
+      user-select: text;
+    }
+    .btn-static:hover{
+      transform: none;
+      box-shadow: 0 10px 24px rgba(0,0,0,.45);
+      background: var(--pill);
+    }
   </style>
 
-  <!-- Tidio / Lyro widget -->
   <script src="https://code.tidio.co/pc94huyj1coxv0pdlnhxcgjmavkxuifm.js" async></script>
-
   <script>
-    // Auto-open the assistant widget (no button visible)
     (function () {
       function openAssistant() {
         try {
@@ -115,7 +119,7 @@
       } else {
         document.addEventListener('tidioChat-ready', onReady);
       }
-      setTimeout(openAssistant, 2500); // fallback
+      setTimeout(openAssistant, 2500);
     })();
   </script>
 </head>
@@ -136,7 +140,7 @@
       <div class="buttons">
         <a class="btn" href="https://calendly.com/coenzweers-solix/introduction" target="_blank" rel="noopener">Book an introduction</a>
         <a class="btn" href="https://www.linkedin.com/in/coenzweers/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn" href="mailto:coenzweers@solix.cc">coenzweers@solix.cc</a>
+        <div class="btn btn-static" aria-label="Email address">coenzweers@solix.cc</div>
       </div>
     </div>
   </main>
