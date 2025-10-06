@@ -1,20 +1,20 @@
-# Solix AI Assistant – Contact page + Chat (black background)
+# Solix Consulting – Contact page with chatbot
 
-This package contains two pages:
-
-- **index.html** — black-background landing page with:
+Included:
+- **index.html** — Black background, portrait left / content right. Buttons:
   - Book an introduction (Calendly)
   - LinkedIn
-  - The **Solix AI Assistant opens automatically** on load (best-effort). A backup link points to `chat.html`.
+  - Email: coenzweers@solix.cc
+  - AI chatbot – Ask me anything (opens the Solix AI Assistant widget)
+  The widget also auto-opens on page load.
+- **chat.html** — Backup full-screen assistant page (auto-opens).
+- **portrait.jpg** — Portrait image.
+- **logo.png** — Solix Consulting logo for bottom-right corner.
 
-- **chat.html** — a dedicated full-screen page that loads the assistant and auto-opens it.
+GitHub Pages:
+1) Upload all files to the repo root on the `main` branch.
+2) Settings → Pages → Deploy from a branch → `main` / `(root)`.
+3) Landing URL: `https://<username>.github.io/<repo>/`
 
-## Publish on GitHub Pages
-1. Upload `index.html` and `chat.html` to the **root** of your repository's `main` branch.
-2. In **Settings → Pages**, set **Deploy from a branch**, then **Branch: `main`**, **Folder: `/ (root)`**.
-3. Your URLs:
-   - Landing: `https://<username>.github.io/<repo>/`
-   - Assistant: `https://<username>.github.io/<repo>/chat.html`
-
-## Embed in Canva
-Use **Apps → Embed → Website** and paste either URL.
+Canva:
+- Apps → Embed → Website → paste your landing URL.

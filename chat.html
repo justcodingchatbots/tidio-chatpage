@@ -3,127 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Solix AI Assistant</title>
+    <title>Solix AI Assistant (Full Screen)</title>
     <meta name="description" content="Chat with the Solix AI Assistant." />
     <style>
-      html, body {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        background: #000;
-        overflow: hidden;
-      }
-      #tidio-chat,
-      div[id^="tidio-"],
-      iframe[src*="tidio"] {
-        position: fixed !important;
-        inset: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        max-width: 100vw !important;
-        max-height: 100vh !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: 0 !important;
-        box-shadow: none !important;
-        transform: none !important;
+      html, body { height:100%; width:100%; margin:0; padding:0; background:#000; overflow:hidden; }
+      #tidio-chat, div[id^="tidio-"], iframe[src*="tidio"] {
+        position: fixed !important; inset: 0 !important;
+        width: 100vw !important; height: 100vh !important;
+        max-width: 100vw !important; max-height: 100vh !important;
+        margin: 0 !important; padding: 0 !important; border: 0 !important;
+        box-shadow: none !important; transform: none !important; background: transparent !important;
         z-index: 2147483646 !important;
-        background: transparent !important;
       }
       .fallback {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        color: #e8f6f6;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
-        text-align: center;
+        position:absolute; inset:0; display:grid; place-items:center; color:#e8f6f6;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; text-align:center;
       }
-      .fallback small{opacity:.7}
     </style>
-
-    <!-- Tidio / Lyro widget -->
     <script src="https://code.tidio.co/pc94huyj1coxv0pdlnhxcgjmavkxuifm.js" async></script>
-
     <script>
       (function () {
         function maximize() {
-          var selectors = ['#tidio-chat','div[id^="tidio-"]','iframe[src*="tidio"]'];
-          selectors.forEach(function (sel) {
-            document.querySelectorAll(sel).forEach(function (el) {
+          ['#tidio-chat','div[id^="tidio-"]','iframe[src*="tidio"]'].forEach(function(sel){
+            document.querySelectorAll(sel).forEach(function(el){
               try {
-                el.style.position = 'fixed';
-                el.style.left = '0';
-                el.style.top = '0';
-                el.style.right = '0';
-                el.style.bottom = '0';
-                el.style.width = '100vw';
-                el.style.height = '100vh';
-                el.style.maxWidth = '100vw';
-                el.style.maxHeight = '100vh';
-                el.style.margin = '0';
-                el.style.padding = '0';
-                el.style.border = '0';
-                el.style.boxShadow = 'none';
-                el.style.transform = 'none';
-                el.style.background = 'transparent';
-                el.style.zIndex = '2147483646';
-              } catch (e) {}
+                el.style.position='fixed'; el.style.left='0'; el.style.top='0';
+                el.style.right='0'; el.style.bottom='0'; el.style.width='100vw';
+                el.style.height='100vh'; el.style.maxWidth='100vw'; el.style.maxHeight='100vh';
+                el.style.margin='0'; el.style.padding='0'; el.style.border='0';
+                el.style.boxShadow='none'; el.style.transform='none'; el.style.background='transparent';
+                el.style.zIndex='2147483646';
+              } catch(e){}
             });
           });
         }
-
-        function hideSmallBubbles() {
-          document.querySelectorAll('iframe[src*="tidio"]').forEach(function (iframe) {
-            try {
-              var r = iframe.getBoundingClientRect();
-              if (r.width <= 200 && r.height <= 200) {
-                iframe.style.display = 'none';
-              }
-            } catch (e) {}
-          });
-        }
-
         function onReady() {
-          try {
-            if (window.tidioChatApi) {
-              window.tidioChatApi.display(true);
-              window.tidioChatApi.open();
-            }
-          } catch (e) {}
-          maximize();
-          hideSmallBubbles();
-          setTimeout(maximize, 300);
-          setTimeout(hideSmallBubbles, 600);
-          setTimeout(maximize, 1200);
-          setTimeout(hideSmallBubbles, 1800);
+          try { if (window.tidioChatApi) { window.tidioChatApi.display(true); window.tidioChatApi.open(); } } catch(e){}
+          maximize(); setTimeout(maximize, 400); setTimeout(maximize, 1200);
         }
-
-        if (window.tidioChatApi && window.tidioChatApi.on) {
-          window.tidioChatApi.on('ready', onReady);
-        } else {
-          document.addEventListener('tidioChat-ready', onReady);
-        }
-
+        if (window.tidioChatApi && window.tidioChatApi.on) { window.tidioChatApi.on('ready', onReady); }
+        else { document.addEventListener('tidioChat-ready', onReady); }
         setTimeout(onReady, 2500);
-        try {
-          var mo = new MutationObserver(function () {
-            maximize();
-            hideSmallBubbles();
-          });
-          mo.observe(document.documentElement, { childList: true, subtree: true });
-        } catch (e) {}
       })();
     </script>
   </head>
   <body>
-    <div class="fallback">
-      <div>
-        <h1>Solix AI Assistant</h1>
-        <p>Loading chat…</p>
-        <small>If the chat doesn't appear, check your network or ad-block settings.</small>
-      </div>
-    </div>
+    <div class="fallback"><div><h1>Solix AI Assistant</h1><p>Loading…</p></div></div>
   </body>
 </html>
