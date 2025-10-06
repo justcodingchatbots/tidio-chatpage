@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact me for more details · Solix AI Assistant</title>
-  <meta name="description" content="Contact Coen Zweers — book a meeting, connect on LinkedIn, email, or chat with the Solix AI Assistant." />
+  <title>Contact me for more details · Solix Consulting</title>
+  <meta name="description" content="Contact Coen Zweers — book a meeting, connect on LinkedIn, or email. Solix AI Assistant widget is enabled." />
   <style>
     :root{
       --bg:#000;
@@ -19,23 +19,55 @@
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      display:grid;
-      place-items:center;
-      padding: clamp(16px, 3vw, 48px);
+      display:block;
+      padding: clamp(12px, 2vw, 20px);
       overflow-x:hidden;
     }
-    .frame{
-      width:min(1200px, 100%);
+
+    /* Brand top-left */
+    .brand{
+      position: fixed;
+      top: clamp(12px, 2vw, 20px);
+      left: clamp(12px, 2vw, 20px);
+      display:flex; align-items:center; gap:10px;
+      color: var(--teal);
+      text-decoration:none;
+      font-weight:800;
+      font-size: clamp(14px, 2vw, 22px);
+      z-index: 10;
+    }
+    .brand img{ width: clamp(24px, 3.2vw, 36px); height:auto; display:block; }
+
+    /* Main layout */
+    .container{
+      width:min(1220px, 100%);
+      margin: 0 auto;
+      margin-top: clamp(40px, 8vh, 80px); /* space beneath brand */
       display:grid;
       grid-template-columns: 1fr;
-      gap: clamp(20px, 4vw, 60px);
+      gap: clamp(16px, 3vw, 40px);
       align-items:center;
     }
     @media (min-width: 980px){
-      .frame{ grid-template-columns: 1fr 1.3fr; }
+      .container{
+        grid-template-columns: 1fr 1.3fr;
+      }
     }
+
+    /* Full-width page title */
+    .page-title{
+      grid-column: 1 / -1; /* span across both columns */
+      margin: 0;
+      font-size: clamp(42px, 9vw, 108px);
+      line-height: .95;
+      font-weight: 900;
+      color: var(--teal);
+      letter-spacing: .2px;
+      text-align: left;
+    }
+
     .photo{
-      display:flex; align-items:center; justify-content:center;
+      display:flex; align-items:center; justify-content:flex-start;
     }
     .photo img{
       width:100%; max-width: 520px; height:auto;
@@ -43,26 +75,18 @@
       box-shadow: 0 18px 42px rgba(0,0,0,.6);
       object-fit: cover;
     }
-    .content h1{
-      margin:0 0 clamp(12px, 2.4vw, 24px);
-      font-size: clamp(42px, 9vw, 108px);
-      line-height: .95;
-      font-weight: 900;
-      color: var(--teal);
-      letter-spacing: .2px;
-    }
     .buttons{
-      margin-top: clamp(8px, 1.2vw, 12px);
       display:grid;
       gap: clamp(10px, 1.2vw, 16px);
       max-width: 720px;
+      margin-top: 0;
     }
     .btn{
       display:flex; align-items:center; justify-content:center;
       padding: 18px 22px;
       border-radius: 999px;
       text-decoration: none;
-      background: #118b8b; /* slightly darker than teal for pill */
+      background: var(--pill);
       color: #071f1f;
       font-weight: 800;
       font-size: clamp(16px, 2.2vw, 22px);
@@ -71,25 +95,13 @@
     }
     .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 36px rgba(0,0,0,.6); background:#19b3b3; }
     .btn:active{ transform: translateY(0) scale(.99); }
-    .brand{
-      position: fixed;
-      right: clamp(16px, 3vw, 40px);
-      bottom: clamp(16px, 3vw, 40px);
-      display:flex; align-items:center; gap:10px;
-      color: var(--teal);
-      opacity:.95;
-      text-decoration:none;
-      font-weight:700;
-      font-size: clamp(14px, 2vw, 22px);
-    }
-    .brand img{ width: clamp(28px, 4vw, 44px); height: auto; display:block; }
   </style>
 
   <!-- Tidio / Lyro widget -->
   <script src="https://code.tidio.co/pc94huyj1coxv0pdlnhxcgjmavkxuifm.js" async></script>
 
   <script>
-    // Auto-open the Solix AI Assistant and expose a function to re-open it.
+    // Auto-open the assistant widget (no extra button shown on the page)
     (function () {
       function openAssistant() {
         try {
@@ -106,30 +118,29 @@
         document.addEventListener('tidioChat-ready', onReady);
       }
       setTimeout(openAssistant, 2500); // fallback
-      window._openSolixAssistant = openAssistant;
     })();
   </script>
 </head>
 <body>
-  <div class="frame">
+  <a class="brand" href="#" aria-label="Solix Consulting">
+    <img src="logo.png" alt="Solix Consulting logo"/>
+    <span>Solix Consulting</span>
+  </a>
+
+  <main class="container">
+    <h1 class="page-title">Contact me for more details</h1>
+
     <div class="photo">
       <img src="portrait.jpg" alt="Portrait of Coen Zweers" />
     </div>
 
     <div class="content">
-      <h1>Contact me for<br/>more details</h1>
       <div class="buttons">
         <a class="btn" href="https://calendly.com/coenzweers-solix/introduction" target="_blank" rel="noopener">Book an introduction</a>
         <a class="btn" href="https://www.linkedin.com/in/coenzweers/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="mailto:coenzweers@solix.cc">coenzweers@solix.cc</a>
-        <a class="btn" href="javascript:void(0)" onclick="_openSolixAssistant()">AI chatbot — Ask me anything</a>
       </div>
     </div>
-  </div>
-
-  <a class="brand" href="#" aria-label="Solix Consulting">
-    <img src="logo.png" alt="Solix Consulting logo"/>
-    <span>Solix Consulting</span>
-  </a>
+  </main>
 </body>
 </html>
