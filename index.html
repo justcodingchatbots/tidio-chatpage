@@ -3,24 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat with us</title>
+    <title>Chat</title>
     <!-- Tidio / Lyro widget -->
     <script src="https://code.tidio.co/pc94huyj1coxv0pdlnhxcgjmavkxuifm.js" async></script>
     <style>
-      html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-      main { min-height: 100%; display: grid; place-items: center; padding: 2rem; }
-      .card { max-width: 720px; text-align: center; border: 1px solid #e5e7eb; border-radius: 16px; padding: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.06); }
-      h1 { margin-top: 0; }
-      p { line-height: 1.5; }
+      /* Make the page itself blank and non-scrollable */
+      html, body { height: 100%; margin: 0; background: transparent; overflow: hidden; }
     </style>
+    <script>
+      (function () {
+        function onTidioChatApiReady() {
+          try {
+            // Ensure the widget is visible and open as soon as it's ready
+            window.tidioChatApi.display(true);
+            window.tidioChatApi.open();
+          } catch (e) {
+            console.error("Tidio API error:", e);
+          }
+        }
+        // Listen for Tidio readiness in both possible ways
+        if (window.tidioChatApi && window.tidioChatApi.on) {
+          window.tidioChatApi.on('ready', onTidioChatApiReady);
+        } else {
+          document.addEventListener('tidioChat-ready', onTidioChatApiReady);
+        }
+      })();
+    </script>
   </head>
-  <body>
-    <main>
-      <div class="card">
-        <h1>Need help? Chat with us</h1>
-        <p>This page loads the Tidio / Lyro widget. If you can see the floating chat bubble, everything is working.</p>
-        <p>You can embed this page into your Canva site via <em>Apps → Embed → Website</em>.</p>
-      </div>
-    </main>
-  </body>
+  <body></body>
 </html>
