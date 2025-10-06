@@ -2,31 +2,131 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chat (Full Screen)</title>
+
     <!-- Tidio / Lyro widget -->
     <script src="https://code.tidio.co/pc94huyj1coxv0pdlnhxcgjmavkxuifm.js" async></script>
+
     <style>
-      /* Make the page itself blank and non-scrollable */
-      html, body { height: 100%; margin: 0; background: transparent; overflow: hidden; }
+      /* Page reset: no scroll, no margins, full-viewport canvas */
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: #ffffff; /* or transparent if you prefer */
+        overflow: hidden;
+      }
+
+      /* Best-effort overrides for Tidio containers/iframes */
+      /* We cannot style inside Tidio's cross-origin iframe, but we can style the iframe element and its container */
+      #tidio-chat,
+      div[id^="tidio-"],
+      iframe[src*="tidio"] {
+        position: fixed !important;
+        inset: 0 !important;           /* top/right/bottom/left = 0 */
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100vw !important;
+        max-height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        z-index: 2147483646 !important; /* sit on top of everything in this page */
+        background: transparent !important;
+      }
     </style>
+
     <script>
       (function () {
-        function onTidioChatApiReady() {
+        function openAndFullscreen() {
           try {
-            // Ensure the widget is visible and open as soon as it's ready
-            window.tidioChatApi.display(true);
-            window.tidioChatApi.open();
+            if (window.tidioChatApi) {
+              // Ensure the widget is visible & open
+              window.tidioChatApi.display(true);
+              window.tidioChatApi.open();
+            }
           } catch (e) {
             console.error("Tidio API error:", e);
           }
+
+          // Try to maximize all Tidio iframes & containers
+          function maximize() {
+            var selectors = [
+              '#tidio-chat',
+              'div[id^="tidio-"]',
+              'iframe[src*="tidio"]'
+            ];
+            selectors.forEach(function (sel) {
+              document.querySelectorAll(sel).forEach(function (el) {
+                try {
+                  el.style.position = 'fixed';
+                  el.style.left = '0';
+                  el.style.top = '0';
+                  el.style.right = '0';
+                  el.style.bottom = '0';
+                  el.style.width = '100vw';
+                  el.style.height = '100vh';
+                  el.style.maxWidth = '100vw';
+                  el.style.maxHeight = '100vh';
+                  el.style.margin = '0';
+                  el.style.padding = '0';
+                  el.style.border = '0';
+                  el.style.boxShadow = 'none';
+                  el.style.transform = 'none';
+                  el.style.background = 'transparent';
+                  el.style.zIndex = '2147483646';
+                } catch (e) {}
+              });
+            });
+          }
+
+          // Hide obvious small launcher bubble if it's present (keep only the full chat window)
+          function hideSmallBubbles() {
+            document.querySelectorAll('iframe[src*="tidio"]').forEach(function (iframe) {
+              try {
+                var r = iframe.getBoundingClientRect();
+                if (r.width <= 200 && r.height <= 200) {
+                  iframe.style.display = 'none';
+                }
+              } catch (e) {}
+            });
+          }
+
+          // Run immediately, and also a few times after load to catch late DOM injections
+          maximize();
+          hideSmallBubbles();
+          setTimeout(maximize, 300);
+          setTimeout(hideSmallBubbles, 600);
+          setTimeout(maximize, 1200);
+          setTimeout(hideSmallBubbles, 1800);
+
+          // MutationObserver as a fallback for dynamic changes
+          try {
+            var mo = new MutationObserver(function () {
+              maximize();
+              hideSmallBubbles();
+            });
+            mo.observe(document.documentElement, { childList: true, subtree: true });
+          } catch (e) {}
         }
-        // Listen for Tidio readiness in both possible ways
+
+        function onReady() {
+          openAndFullscreen();
+        }
+
+        // Tidio exposes a custom event and also an API 'on("ready")'
         if (window.tidioChatApi && window.tidioChatApi.on) {
-          window.tidioChatApi.on('ready', onTidioChatApiReady);
+          window.tidioChatApi.on('ready', onReady);
         } else {
-          document.addEventListener('tidioChat-ready', onTidioChatApiReady);
+          document.addEventListener('tidioChat-ready', onReady);
         }
+
+        // As a fallback, try again after a short delay in case events didn't fire
+        setTimeout(openAndFullscreen, 2500);
       })();
     </script>
   </head>
