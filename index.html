@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact Coen Zweers</title>
-  <meta name="description" content="Book an introduction, connect on LinkedIn, or chat with the AI assistant." />
+  <title>Solix AI Assistant · Contact Coen Zweers</title>
+  <meta name="description" content="Book an introduction, connect on LinkedIn, or chat with the Solix AI Assistant." />
   <style>
     :root{
       --bg:#000000;
@@ -20,11 +20,13 @@
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      overflow:hidden; /* prevent scroll when chat opens */
     }
     main{
       width:min(100%, 980px);
       padding: clamp(16px, 4vw, 48px);
       text-align:left;
+      z-index: 1; /* sit behind chat overlay */
     }
     h1{
       margin:0 0 28px;
@@ -62,17 +64,113 @@
       color: #042222;
     }
     .btn:active{ transform: translateY(0) scale(.99); }
-    .note{
-      margin-top:18px;
-      opacity:.8;
-      font-size: 14px;
-    }
     footer{
       margin-top:28px;
       font-size:12px;
       opacity:.6;
     }
+
+    /* Try to make the Tidio container/iframe full screen */
+    #tidio-chat,
+    div[id^="tidio-"],
+    iframe[src*="tidio"] {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      transform: none !important;
+      z-index: 2147483646 !important;
+      background: transparent !important;
+    }
+
+    /* Optional: small helper bubble hidden once full panel opens */
+    .hide-launcher iframe[src*="tidio"] {
+      display: none !important;
+    }
   </style>
+
+  <!-- Tidio / Lyro widget -->
+  <script src="https://code.tidio.co/pc94huyj1coxv0pdlnhxcgjmavkxuifm.js" async></script>
+
+  <script>
+    (function () {
+      function maximize() {
+        var selectors = ['#tidio-chat','div[id^="tidio-"]','iframe[src*="tidio"]'];
+        selectors.forEach(function (sel) {
+          document.querySelectorAll(sel).forEach(function (el) {
+            try {
+              el.style.position = 'fixed';
+              el.style.left = '0';
+              el.style.top = '0';
+              el.style.right = '0';
+              el.style.bottom = '0';
+              el.style.width = '100vw';
+              el.style.height = '100vh';
+              el.style.maxWidth = '100vw';
+              el.style.maxHeight = '100vh';
+              el.style.margin = '0';
+              el.style.padding = '0';
+              el.style.border = '0';
+              el.style.boxShadow = 'none';
+              el.style.transform = 'none';
+              el.style.background = 'transparent';
+              el.style.zIndex = '2147483646';
+            } catch (e) {}
+          });
+        });
+      }
+
+      function hideSmallBubbles() {
+        document.body.classList.add('hide-launcher');
+        document.querySelectorAll('iframe[src*="tidio"]').forEach(function (iframe) {
+          try {
+            var r = iframe.getBoundingClientRect();
+            if (r.width <= 200 && r.height <= 200) {
+              iframe.style.display = 'none';
+            }
+          } catch (e) {}
+        });
+      }
+
+      function onReady() {
+        try {
+          if (window.tidioChatApi) {
+            // Show and open the chat immediately
+            window.tidioChatApi.display(true);
+            window.tidioChatApi.open();
+          }
+        } catch (e) {}
+        maximize();
+        hideSmallBubbles();
+        setTimeout(maximize, 300);
+        setTimeout(hideSmallBubbles, 600);
+        setTimeout(maximize, 1200);
+        setTimeout(hideSmallBubbles, 1800);
+      }
+
+      // Tidio events
+      if (window.tidioChatApi && window.tidioChatApi.on) {
+        window.tidioChatApi.on('ready', onReady);
+      } else {
+        document.addEventListener('tidioChat-ready', onReady);
+      }
+      // Fallback timers
+      setTimeout(onReady, 2500);
+      try {
+        var mo = new MutationObserver(function () {
+          maximize();
+          hideSmallBubbles();
+        });
+        mo.observe(document.documentElement, { childList: true, subtree: true });
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <main role="main">
@@ -80,10 +178,9 @@
     <div class="actions">
       <a class="btn" href="https://calendly.com/coenzweers-solix/introduction" target="_blank" rel="noopener" aria-label="Book an introduction on Calendly">Book an introduction</a>
       <a class="btn" href="https://www.linkedin.com/in/coenzweers/" target="_blank" rel="noopener" aria-label="Visit my LinkedIn profile">LinkedIn</a>
-      <a class="btn" href="./chat.html" aria-label="Open AI chatbot assistant">AI chatbot – Ask me anything</a>
+      <a class="btn" href="./chat.html" aria-label="Open the Solix AI Assistant (backup link)">Solix AI Assistant (backup link)</a>
     </div>
-    <p class="note">Background is intentionally black. The AI assistant opens on a separate full-screen page.</p>
-    <footer>© Coen Zweers</footer>
+    <footer>© Coen Zweers · Solix AI Assistant</footer>
   </main>
 </body>
 </html>
